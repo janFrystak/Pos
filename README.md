@@ -1,4 +1,3 @@
-# Pos
 Transportní vrstva
 
 Socket a číslo portu
@@ -15,3 +14,13 @@ http://mis.e-mis.cz/index.php/Protokoly_aplika%C4%8Dn%C3%AD_vrstvy
 
 Navazování spojení
 http://mis.e-mis.cz/index.php/Navazov%C3%A1n%C3%AD_spojen%C3%AD
+
+Three-way handshake - 	Žádost o otevření/uzavření spojení
+			Potvrzení připravenosti partnera
+			Schválení otevření/uzavření
+
+TCP -	SYN... „Synchronize“ ... „Chci začít komunikovat“		-
+	ACK... „Acknowledge“ ... „Potvrzuji předchozí požadavek“	-Hodnota 0 nebo 1
+	FIN... „Finalize“ ... „Jsem hotov, chci ukončit spojení“	-
+
+SYN flood - posílání požadavků SYN ale nepotvrzování pomocí ACK
