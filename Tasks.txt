@@ -1,0 +1,48 @@
+4b5b - připíše jakoukoliv kombinaci na 4. bitů na 5 za účelem méně opakování tudíž lepšího čtení
+manchester - nevíhody: musím měnit signál 2x víckrát, lepší na přečtení měny signálu než stav signálu
+
+1. fyzická(data) - 	Dovoluje nám přenášet bity přes médium pomocí kódování a dekédování dat na sousední počítače 
+-[https://web.archive.org/web/20090618154921/http://www.erg.abdn.ac.uk/users/gorry/course/phy-pages/phy.html]
+
+2. linková(frame) - 	připravuje data na přeposlání fyzickou vrstvou, používá mac adresy
+			2.1 - základní kontrola chyb
+			2.2 - synchronizuje vysílání framů 
+				- (na zažátek a konec framu dá "flag", označení zahájení a konce přenosu, STX (Start of text), ETX (end of text), DLE (data link escape, změná víznamu následujícího znaku)
+				- transparence dat (zajištění že rozlišíme kontrolní znaky od dat, použijeme Character stuffing (DLE)
+			2.3 - adresace (aby věděl komu data v síti poslat, dle Mac adresy)
+			2.4 - řízení přístupu k sdílenému médiu(kontrola pro kolize a jejich handeling -> jen u starých zařízení, vyřeší duplex Switch)
+				2.4.1 CSMA/CD - konroluje přenosové médium + hledá kolizující vysílání -> if(true) {stopSending(), wait(x), resumeSending()}
+					2.4.1.1 - Ethernet je nejrozšířenějším představitelem
+					2.4.1.2 - <Steps>
+						2.4.1.2.1 - If(volnéMédium) {->2} else {wait()}
+						2.4.1.2.2 - StartSending(), if(anotherStationIsSending()) {stopSending(), warnWarningOthers() ->3}
+						2.4.1.2.3 - Wait(0 do 2k - 1) If(!canSend) {->1}
+
+		
+3. síťová(packet) - 	-Addressing end devices
+			-Encapsulace
+				-segment + IP header
+			-Routing
+			-De-encapsulace
+				-pokud se IP v IP headeru přijatého packetu rovná mojí, de-capsuluju, mažu header a posílám do layer 4
+
+
+4. transportní(segment) -pokud posíláme více dat rozdělí je na menší úseky a poté se stará když se stratí nebo poškodí
+		určuje ke které aplikaci přijaté date patří (číslo portu)
+
+5. prezentačn - extra funkce (komprese, šifrování)
+
+6. relační - 	když navazujeme na předchozí komunikaci, pamatuje se předchozí
+
+7. aplikační - 	protokoly, které řeší potřeby uživatele a aplikací
+
+
+
+
+
+
+
+CSMA/CD
+1. pokud je médium volné, začne posílat, pokud ne počká
+2. posílá a kontroluje zda přichází signál od jiné stanice, pokud ano pošle signál o kolizi ostatním
+3. počká čas který se po každém pokusu zvíší až do 1023 sec, po 16.pokusu vzdává a vrací se k bodu 1.
